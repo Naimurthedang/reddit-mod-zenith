@@ -1,0 +1,16 @@
+{
+  "name": "modguard-ai",
+  "version": "0.1.0",
+  "description": "AI suspicion scoring for Reddit moderators — behavioral signals, auto-hold, and a confidence dashboard",
+  "type": "module",
+  "devvit": {
+    "version": "0.11.4"
+  },
+  "dependencies": {
+    "@devvit/public-api": "^0.11.4"
+  },
+  "devDependencies": {
+    "typescript": "5.3.3"
+  },
+  "private": true
+}

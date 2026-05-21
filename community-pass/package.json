@@ -1,0 +1,20 @@
+{
+  "name": "community-pass",
+  "version": "0.1.0",
+  "description": "A graduated user trust and reputation system for Reddit communities",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "devDependencies": {
+    "@devvit/public-api": "^0.11.12",
+    "typescript": "^5.5.0"
+  },
+  "scripts": {
+    "build": "devvit build",
+    "dev": "devvit playtest r/YOUR_SUBREDDIT",
+    "deploy": "devvit deploy",
+    "launch": "devvit publish",
+    "login": "devvit login",
+    "type-check": "tsc --noEmit"
+  }
+}

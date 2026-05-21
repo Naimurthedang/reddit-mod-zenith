@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reddit $45K Hackathon — Winning Strategy Guide</title>
+<style>
+  :root {
+    --reddit-orange: #FF4500;
+    --reddit-orange-light: #FF6534;
+    --reddit-blue: #0079D3;
+    --reddit-dark: #1A1A1B;
+    --reddit-surface: #DAE0E6;
+    --reddit-card: #FFFFFF;
+    --reddit-border: #EDEFF1;
+    --reddit-text: #1c1c1c;
+    --reddit-muted: #878A8C;
+    --gold: #FFB000;
+    --green: #46D160;
+    --red: #FF585B;
+    --purple: #A06EFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--reddit-surface);
+    color: var(--reddit-text);
+    line-height: 1.6;
+  }
+  header {
+    background: var(--reddit-dark);
+    color: white;
+    padding: 32px 24px;
+    text-align: center;
+  }
+  .logo { font-size: 13px; letter-spacing: 3px; color: var(--reddit-orange); font-weight: 700; margin-bottom: 8px; }
+  header h1 { font-size: 28px; font-weight: 800; margin-bottom: 6px; }
+  header p { color: #aaa; font-size: 14px; }
+  .prize-bar {
+    background: linear-gradient(135deg, var(--reddit-orange), #FF6534);
+    color: white;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    font-weight: 700;
+    font-size: 15px;
+    text-align: center;
+  }
+  .prize-item span { display: block; font-size: 22px; font-weight: 900; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 24px 16px; }
+  .section-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--reddit-dark);
+    border-left: 4px solid var(--reddit-orange);
+    padding-left: 12px;
+    margin: 32px 0 16px;
+  }
+  .card {
+    background: var(--reddit-card);
+    border-radius: 8px;
+    border: 1px solid var(--reddit-border);
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+  }
+  .idea-card {
+    background: var(--reddit-card);
+    border-radius: 8px;
+    border: 1px solid var(--reddit-border);
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,.08);
+  }
+  .idea-header {
+    padding: 18px 20px 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    border-bottom: 1px solid var(--reddit-border);
+  }
+  .rank-badge {
+    background: var(--reddit-orange);
+    color: white;
+    font-weight: 900;
+    font-size: 18px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-badge.gold { background: var(--gold); }
+  .rank-badge.silver { background: #888; }
+  .rank-badge.port { background: var(--reddit-blue); }
+  .idea-title { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+  .idea-subtitle { font-size: 13px; color: var(--reddit-muted); }
+  .idea-body { padding: 18px 20px; }
+  .idea-body p { font-size: 14px; color: #444; margin-bottom: 14px; }
+  .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .tag {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 12px;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+  }
+  .tag-orange { background: #FFF0EB; color: var(--reddit-orange); border: 1px solid #FFCFBE; }
+  .tag-blue { background: #EBF5FF; color: var(--reddit-blue); border: 1px solid #C5DCEF; }
+  .tag-green { background: #EAFBF0; color: #2D8D4E; border: 1px solid #B0DFC0; }
+  .tag-purple { background: #F3EEFF; color: #7048D2; border: 1px solid #C9BAEE; }
+  .tag-gold { background: #FFF8E6; color: #A37000; border: 1px solid #EEDD99; }
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .metric-box {
+    background: var(--reddit-surface);
+    border-radius: 6px;
+    padding: 10px;
+    text-align: center;
+  }
+  .metric-box .val { font-size: 20px; font-weight: 900; color: var(--reddit-orange); }
+  .metric-box .lbl { font-size: 11px; color: var(--reddit-muted); font-weight: 600; margin-top: 2px; }
+  .section-divider {
+    background: var(--reddit-dark);
+    color: white;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    border-radius: 4px;
+    margin: 10px 0;
+    text-transform: uppercase;
+  }
+  .prompt-box {
+    background: #0D1117;
+    color: #C9D1D9;
+    border-radius: 8px;
+    padding: 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+    position: relative;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .prompt-box .kw { color: #FF9A3C; }
+  .prompt-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--reddit-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #30363D;
+    color: #C9D1D9;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .copy-btn:hover { background: #444; }
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .pain-item {
+    background: var(--reddit-card);
+    border-radius: 6px;
+    border: 1px solid var(--reddit-border);
+    padding: 14px;
+  }
+  .pain-item .pain-pct {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--reddit-orange);
+  }
+  .pain-item .pain-name { font-size: 13px; font-weight: 700; margin: 4px 0 2px; }
+  .pain-item .pain-desc { font-size: 12px; color: var(--reddit-muted); }
+  .win-tips {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .win-tip {
+    background: var(--reddit-card);
+    border: 1px solid var(--reddit-border);
+    border-radius: 6px;
+    padding: 14px;
+  }
+  .win-tip .wt-icon { font-size: 22px; margin-bottom: 6px; }
+  .win-tip .wt-title { font-size: 13px; font-weight: 800; margin-bottom: 4px; }
+  .win-tip .wt-desc { font-size: 12px; color: #555; }
+  .verdict {
+    background: linear-gradient(135deg, #FF4500, #FF6D00);
+    color: white;
+    border-radius: 8px;
+    padding: 24px;
+    margin-top: 8px;
+    text-align: center;
+  }
+  .verdict h2 { font-size: 20px; font-weight: 900; margin-bottom: 8px; }
+  .verdict p { font-size: 14px; opacity: .9; }
+  .tabs { display: flex; gap: 0; margin-bottom: 0; border-bottom: 2px solid var(--reddit-border); }
+  .tab-btn {
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--reddit-muted);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all .2s;
+  }
+  .tab-btn.active { color: var(--reddit-orange); border-bottom-color: var(--reddit-orange); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  @media (max-width: 600px) {
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .prize-bar { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🏆 HACKATHON STRATEGY GUIDE</div>
+  <h1>Reddit $45,000 Mod Tools Hackathon</h1>
+  <p>Deadline: May 28, 2026 · Research-backed winning ideas + build prompts</p>
+</header>
+
+<div class="prize-bar">
+  <div class="prize-item">🥇 Best New Tool <span>$10,000</span></div>
+  <div class="prize-item">🔄 Best Ported App <span>$10,000</span></div>
+  <div class="prize-item">👥 Mod's Choice <span>$10,000</span></div>
+  <div class="prize-item">🎖 Honorable Mentions <span>$1,000 × 10</span></div>
+</div>
+
+<div class="container">
+
+  <!-- Pain points -->
+  <div class="section-title">📊 Real Pain Points from Cornell + Reddit Research</div>
+  <div class="pain-grid">
+    <div class="pain-item">
+      <div class="pain-pct">67%</div>
+      <div class="pain-name">Social Dynamics Collapse</div>
+      <div class="pain-desc">Mods can't tell real humans from AI-assisted accounts</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-pct">60%</div>
+      <div class="pain-name">Content Quality Crisis</div>
+      <div class="pain-desc">AI spam degrades subreddit quality at scale</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-pct">53%</div>
+      <div class="pain-name">Governance Impossible</div>
+      <div class="pain-desc">AI detection tools are unreliable or biased</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-pct">HIGH</div>
+      <div class="pain-name">Ban Evasion</div>
+      <div class="pain-desc">Trolls return with new accounts; no automated blocking</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-pct">HIGH</div>
+      <div class="pain-name">Mobile Mod Gap</div>
+      <div class="pain-desc">Native Reddit app moderation is clunky vs old 3rd party apps</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-pct">HIGH</div>
+      <div class="pain-name">Queue Overload</div>
+      <div class="pain-desc">No smart triage; mods see low-risk and high-risk items equally</div>
+    </div>
+  </div>
+
+  <!-- Ideas -->
+  <div class="section-title">🚀 Top 5 Winning Ideas (Ranked by Win Probability)</div>
+
+  <!-- IDEA 1 -->
+  <div class="idea-card">
+    <div class="idea-header">
+      <div class="rank-badge gold">1</div>
+      <div>
+        <div class="idea-title">🤖 ModGuard AI — Smart Content Triage + AI Detection</div>
+        <div class="idea-subtitle">Category: New Mod Tool · Estimated Win Probability: ⭐⭐⭐⭐⭐</div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="tag-row">
+        <span class="tag tag-orange">🔥 HIGHEST IMPACT</span>
+        <span class="tag tag-green">Broad Appeal</span>
+        <span class="tag tag-purple">AI-Powered</span>
+        <span class="tag tag-blue">New Tool</span>
+      </div>
+      <div class="metrics">
+        <div class="metric-box"><div class="val">53%</div><div class="lbl">Mods struggle with AI detection</div></div>
+        <div class="metric-box"><div class="val">307K+</div><div class="lbl">Subreddits that need this</div></div>
+        <div class="metric-box"><div class="val">~0</div><div class="lbl">Devvit tools exist for this</div></div>
+      </div>
+      <p><strong>What it does:</strong> A Devvit app that scores every new post/comment with an AI suspicion score using behavioral signals: account age, posting velocity, comment-to-post ratio, cross-sub patterns, writing style entropy. Gives mods a "confidence dashboard" in the modqueue with colored flags. High-confidence AI content is auto-held for review. No false positive bans — it's a triage helper, not an auto-ban hammer.</p>
+      <p><strong>Why it wins:</strong> Judges score on Community Impact + Ecosystem Impact. This is the #1 unsolved problem for mods per Cornell research (53% say it's nearly impossible). Nothing like this exists in the Devvit ecosystem. Broad appeal — every subreddit with quality standards needs this.</p>
+      <div class="section-divider">🛠 BUILD PROMPT</div>
+      <div class="prompt-label">Paste this into Claude / Cursor / v0:</div>
+      <div class="prompt-box" id="prompt1">
+<span class="kw">Build a Reddit Devvit app called "ModGuard AI".</span>
+
+PLATFORM: Reddit Devvit (TypeScript). Must use @devvit/public-api.
+
+WHAT IT DOES:
+- Intercepts every new post and comment submitted to the subreddit
+- Calculates a suspicion score (0–100) using these behavioral signals:
+    1. Account age (new accounts score higher)
+    2. Posts-per-hour rate in last 24h
+    3. Comment-to-post ratio anomaly
+    4. Identical phrase pattern across recent comments
+    5. Character entropy of post text (AI text has lower entropy variance)
+- Stores scores in Redis (Devvit KV store)
+- Adds a "🤖 AI Risk: LOW/MED/HIGH" flair to each post visible only to mods
+- Items scoring >75 are auto-held in the modqueue with reason "AI Suspicion"
+- Adds a custom Devvit Panel widget to the subreddit showing:
+    - Today's flagged items count
+    - Top 5 most suspicious accounts
+    - Chart of suspicion scores over 7 days
+    - One-click "Approve" or "Remove" buttons
+
+DEVVIT CONFIG PAGE: Let mods configure:
+- Suspicion threshold for auto-hold (default 75)
+- Which signals to enable/disable
+- Whitelist trusted users
+
+Use Devvit's scheduler to run a daily cleanup of old Redis data.
+Show a mod-only sidebar widget with live statistics.
+Follow Devvit best practices for TypeScript, error handling, and rate limits.
+      </div>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('prompt1').innerText)">Copy</button>
+    </div>
+  </div>
+
+  <!-- IDEA 2 -->
+  <div class="idea-card">
+    <div class="idea-header">
+      <div class="rank-badge">2</div>
+      <div>
+        <div class="idea-title">⚡ ModFlow — Intelligent Modqueue Prioritization Dashboard</div>
+        <div class="idea-subtitle">Category: New Mod Tool · Estimated Win Probability: ⭐⭐⭐⭐</div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="tag-row">
+        <span class="tag tag-orange">Time Saver</span>
+        <span class="tag tag-green">Broad Appeal</span>
+        <span class="tag tag-blue">New Tool</span>
+      </div>
+      <div class="metrics">
+        <div class="metric-box"><div class="val">#1</div><div class="lbl">Mod time wasted in queue</div></div>
+        <div class="metric-box"><div class="val">All</div><div class="lbl">Subreddits benefit</div></div>
+        <div class="metric-box"><div class="val">0</div><div class="lbl">Devvit apps do this</div></div>
+      </div>
+      <p><strong>What it does:</strong> Replaces the flat, unorganized modqueue with a smart priority-ranked dashboard. Items are sorted by: viral velocity (rising post with a flag = urgent), report count, account trust score, and rule match confidence. Mods see a "fire alarm" view of what needs immediate attention vs. "when you have time". Adds bulk-action buttons: Approve All Low-Risk, Remove All Spam-Detected in one click.</p>
+      <p><strong>Why it wins:</strong> The modqueue is the single biggest daily pain for active mods. Reddit's own 2024 roadmap lists queue efficiency as a top priority, meaning judges know this matters. This is a pure UX win with time-savings judges can measure.</p>
+      <div class="section-divider">🛠 BUILD PROMPT</div>
+      <div class="prompt-label">Paste this into Claude / Cursor / v0:</div>
+      <div class="prompt-box" id="prompt2">
+<span class="kw">Build a Reddit Devvit app called "ModFlow" for intelligent modqueue management.</span>
+
+PLATFORM: Reddit Devvit (TypeScript). Use @devvit/public-api.
+
+CORE FEATURES:
+1. PRIORITY SCORING ENGINE
+   - Score each modqueue item 1–10 based on:
+     * Post upvote velocity (upvotes/hour) — higher = more urgent
+     * Number of user reports
+     * Account karma (low karma = higher risk)
+     * Account age in days
+     * Whether it matches AutoMod patterns
+   - Store scores in Devvit KV store (Redis)
+
+2. CUSTOM MODQUEUE VIEW (Devvit Custom Post)
+   - Shows items sorted by priority score (highest first)
+   - Color coding: 🔴 Urgent (8–10), 🟡 Medium (5–7), 🟢 Low (1–4)
+   - Each item shows: score, report count, post snippet, account age
+   - Bulk action buttons:
+     * "Remove All 🔴 Flagged"
+     * "Approve All 🟢 Low Risk"
+   - Filter by score range or content type
+
+3. HOT POST ALERTS
+   - If a post goes viral (>100 upvotes/hour) AND has reports → send mod-mail alert
+   - Track which mods handled which items (for team coordination)
+
+4. SETTINGS PAGE
+   - Weight sliders for each scoring factor
+   - Alert threshold configuration
+   - Enable/disable bulk actions
+
+Use Devvit's event triggers (onPostSubmit, onCommentSubmit) to score content in real time.
+Persist priority data in Redis with 48h TTL.
+      </div>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('prompt2').innerText)">Copy</button>
+    </div>
+  </div>
+
+  <!-- IDEA 3 -->
+  <div class="idea-card">
+    <div class="idea-header">
+      <div class="rank-badge port">3</div>
+      <div>
+        <div class="idea-title">📋 TaskerBot → Devvit Port — Mobile-First Mod Commands</div>
+        <div class="idea-subtitle">Category: Ported Data API App · Estimated Win Probability: ⭐⭐⭐⭐⭐</div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="tag-row">
+        <span class="tag tag-gold">🏆 PORT CATEGORY</span>
+        <span class="tag tag-orange">Proven Demand</span>
+        <span class="tag tag-green">Active Communities</span>
+      </div>
+      <div class="metrics">
+        <div class="metric-box"><div class="val">100s</div><div class="lbl">Subreddits use Taskerbot</div></div>
+        <div class="metric-box"><div class="val">2017</div><div class="lbl">Original bot created</div></div>
+        <div class="metric-box"><div class="val">Mobile</div><div class="lbl">Primary use case</div></div>
+      </div>
+      <p><strong>What it does:</strong> Port the beloved Taskerbot (u/Taskerbot on GitHub by GermainZ) to Devvit. Taskerbot lets mods type <code>!rule 1</code> in a report or comment to auto-remove a post with the correct removal reason + flair + user message. Currently runs on PRAW which can go down. Porting to Devvit makes it native, stable, and installable by any mod team.</p>
+      <p><strong>Why it wins:</strong> The port category requires a proven bot with existing communities (500+ WAU). Taskerbot has been serving communities since 2017. It perfectly fits the hackathon's stated goal of "making essential tools more stable". The judging criteria heavily rewards Port Completion — and Taskerbot is very portable.</p>
+      <div class="section-divider">🛠 BUILD PROMPT</div>
+      <div class="prompt-label">Paste this into Claude / Cursor / v0:</div>
+      <div class="prompt-box" id="prompt3">
+<span class="kw">Port "Taskerbot" (a PRAW Reddit bot) to a Reddit Devvit app.</span>
+
+ORIGINAL BOT REFERENCE: https://github.com/GermainZ/Taskerbot
+PLATFORM: Reddit Devvit (TypeScript). Use @devvit/public-api.
+
+CORE FUNCTIONALITY TO PORT:
+1. COMMAND DETECTION
+   - Watch all mod reports and mod comments for these commands:
+     * "!rule {number}" — remove post/comment with rule {number} reason
+     * "!spam" — mark as spam and remove
+     * "!ban {days} "{reason}" "{message}"" — ban the author
+     * "!approve" — approve content
+   - Only respond to commands from subreddit moderators
+
+2. REMOVAL REASON SYSTEM
+   - Store removal reasons in Devvit KV store (replacing wiki config)
+   - Each reason has: rule number, display name, removal message template, flair text
+   - Template variables: {author}, {subreddit}, {url}, {title}
+   - After removal, post a comment with the reason + flair the post
+
+3. CONFIG UI (Devvit Settings Page)
+   - Mods can add/edit/delete removal reasons
+   - Set header and footer for removal messages
+   - Toggle which commands are enabled
+   - Set mod-only mode vs. any-mod mode
+
+4. MOD LOG
+   - Log every action (who triggered it, what command, what content) to Devvit KV
+   - Viewable from a Devvit mod panel widget
+
+5. IMPROVEMENTS OVER ORIGINAL:
+   - No downtime (native Devvit vs. external PRAW server)
+   - Works on mobile mod app natively
+   - GUI config instead of wiki YAML
+   - Real-time command execution (no polling delay)
+
+Implement using onModAction and onCommentCreate triggers.
+      </div>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('prompt3').innerText)">Copy</button>
+    </div>
+  </div>
+
+  <!-- IDEA 4 -->
+  <div class="idea-card">
+    <div class="idea-header">
+      <div class="rank-badge">4</div>
+      <div>
+        <div class="idea-title">🎖 CommunityPass — Graduated Trust & Reputation System</div>
+        <div class="idea-subtitle">Category: New Mod Tool · Estimated Win Probability: ⭐⭐⭐⭐</div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="tag-row">
+        <span class="tag tag-purple">Incentive Design</span>
+        <span class="tag tag-green">Engagement Tool</span>
+        <span class="tag tag-blue">New Tool</span>
+      </div>
+      <p><strong>What it does:</strong> Assigns users a trust level (1–5) based on: account age, post history in subreddit, removal history, and mod-given vouches. Trust level unlocks posting privileges: Level 1 = posts go to queue, Level 3 = auto-approved, Level 5 = can submit to pinned megathreads. Mods spend less time approving good-faith users. Bad actors stay restricted permanently.</p>
+      <p><strong>Why it wins:</strong> Directly addresses the "incentivize good behavior" goal stated in the hackathon brief. Also innovative — no Devvit app does this. The custom post component showing a user's "community passport" is visually impressive for judges.</p>
+      <div class="section-divider">🛠 BUILD PROMPT</div>
+      <div class="prompt-label">Paste this into Claude / Cursor / v0:</div>
+      <div class="prompt-box" id="prompt4">
+<span class="kw">Build a Reddit Devvit app called "CommunityPass" — a graduated user trust system.</span>
+
+PLATFORM: Reddit Devvit (TypeScript). Use @devvit/public-api.
+
+TRUST LEVEL SYSTEM (1–5):
+- Level 1 (New): All posts go to modqueue for review
+- Level 2 (Known): Posts auto-approved, comments watched
+- Level 3 (Trusted): Full posting rights, immune to automod holds
+- Level 4 (Veteran): Can participate in restricted megathreads
+- Level 5 (Elder): Mod-designated; can help approve Level 1 posts
+
+SCORING ALGORITHM (stored in Redis per user):
+Points earned:
+  + 10 pts per approved post
+  + 2 pts per approved comment
+  + 50 pts for mod vouch
+  + 20 pts per month of subreddit activity
+Points deducted:
+  - 30 pts per removed post
+  - 100 pts per ban (temporary)
+  - permanent flag for permanent bans
+
+FEATURES:
+1. Auto-promote users when they cross thresholds
+2. Custom "Passport Card" — a Devvit Custom Post showing user's trust level, badge, and stats
+3. Mod panel to manually adjust trust levels
+4. Configurable: mods set the point thresholds per level
+5. Trust level shown as flair (optional)
+6. When a Level 1 user posts, the mod queue item shows their trust score
+
+TRIGGERS: onPostSubmit, onCommentSubmit, onModAction (for tracking removals and approvals)
+Persist all user data in Devvit Redis KV store.
+      </div>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('prompt4').innerText)">Copy</button>
+    </div>
+  </div>
+
+  <!-- IDEA 5 -->
+  <div class="idea-card">
+    <div class="idea-header">
+      <div class="rank-badge port">5</div>
+      <div>
+        <div class="idea-title">⏰ RemindMeBot → Devvit — The Most-Used Reddit Bot</div>
+        <div class="idea-subtitle">Category: Ported Data API App · Estimated Win Probability: ⭐⭐⭐⭐</div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="tag-row">
+        <span class="tag tag-gold">🏆 PORT CATEGORY</span>
+        <span class="tag tag-orange">Massive User Base</span>
+        <span class="tag tag-green">Iconic Bot</span>
+      </div>
+      <p><strong>What it does:</strong> Port the iconic u/RemindMeBot to Devvit. Users comment "!RemindMe 3 days" or "!RemindMe 2026-06-01" under any post and get a PM reminder when that date arrives. It's one of Reddit's most-used bots, serving millions of users. Porting it to Devvit makes it stable, native, and eliminates downtime.</p>
+      <p><strong>Why it wins:</strong> Judges care about Port Completion score — RemindMeBot is extremely portable to Devvit's scheduler API. The existing community impact is massive and easy to document. Any subreddit can install it and immediately provide value to users, not just mods.</p>
+      <div class="section-divider">🛠 BUILD PROMPT</div>
+      <div class="prompt-label">Paste this into Claude / Cursor / v0:</div>
+      <div class="prompt-box" id="prompt5">
+<span class="kw">Port "RemindMeBot" to a Reddit Devvit app.</span>
+
+PLATFORM: Reddit Devvit (TypeScript). Use @devvit/public-api.
+
+CORE FEATURES:
+1. REMINDER PARSING
+   - Listen to all comments for: "!RemindMe {time}" or "RemindMe! {time}"
+   - Parse time formats:
+     * Relative: "3 days", "2 hours", "1 week", "6 months"
+     * Absolute: "2026-06-01", "June 1st 2026"
+     * Named: "tomorrow", "next monday"
+   - Confirm the reminder with a reply comment showing the scheduled time
+
+2. REMINDER STORAGE (Devvit Redis KV)
+   - Store: { userId, postUrl, commentUrl, reminderTime, originalText }
+   - Use sorted sets (by timestamp) so Devvit scheduler can efficiently find due reminders
+   - Limit: 5 active reminders per user (configurable by mods)
+
+3. REMINDER DELIVERY
+   - Use Devvit scheduler (cron job every minute)
+   - When reminder is due: send user a private message with link back to original thread
+   - Message format: "Hey! You asked to be reminded about: [post title] [link]"
+   - Delete the reminder after delivery
+
+4. MOD CONTROLS
+   - Enable/disable the bot for the subreddit
+   - Set max reminders per user
+   - Set max reminder duration (e.g., max 1 year)
+   - View active reminder count in mod panel
+
+5. USER COMMANDS
+   - "!RemindMe list" — bot replies with their active reminders
+   - "!RemindMe cancel {id}" — cancels a reminder
+
+Handle edge cases: deleted posts, banned users, invalid time formats.
+Use Devvit's native messaging API for PMs.
+      </div>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('prompt5').innerText)">Copy</button>
+    </div>
+  </div>
+
+  <!-- Winning Tips -->
+  <div class="section-title">🎯 How to Actually Win — Judge Scoring Breakdown</div>
+  <div class="win-tips">
+    <div class="win-tip">
+      <div class="wt-icon">💥</div>
+      <div class="wt-title">Community Impact (Highest Weight)</div>
+      <div class="wt-desc">Document specific subreddits that need your tool. Name r/science (14M members), r/AskReddit, etc. Time savings in minutes per week is the metric judges want.</div>
+    </div>
+    <div class="win-tip">
+      <div class="wt-icon">✨</div>
+      <div class="wt-title">Polish = Near Launch-Ready</div>
+      <div class="wt-desc">This is explicitly in the rubric. Handle errors gracefully. Write a clear README. Make the install experience seamless. Test with a real subreddit.</div>
+    </div>
+    <div class="win-tip">
+      <div class="wt-icon">🛡️</div>
+      <div class="wt-title">Reliable UX at Scale</div>
+      <div class="wt-desc">Use Redis TTLs, handle rate limits, don't crash on edge cases. Judges will test with high-traffic scenarios. Use Devvit's scheduler for async work.</div>
+    </div>
+    <div class="win-tip">
+      <div class="wt-icon">🌍</div>
+      <div class="wt-title">Broad Ecosystem Appeal</div>
+      <div class="wt-desc">Tools that work for r/gaming AND r/worldnews AND r/cooking score higher than niche tools. Design for configurability, not just one subreddit type.</div>
+    </div>
+    <div class="win-tip">
+      <div class="wt-icon">📹</div>
+      <div class="wt-title">Demo Video is Critical</div>
+      <div class="wt-desc">Hackathon judges often skim. Record a 2-minute Loom showing the tool in action in a real subreddit. Show the before/after mod experience.</div>
+    </div>
+    <div class="win-tip">
+      <div class="wt-icon">💬</div>
+      <div class="wt-title">Get Moderator Testimonials</div>
+      <div class="wt-desc">The Moderator's Choice panel selects winners. Post your tool in r/ModSupport and r/Devvit before deadline. Get real mod feedback and quote it in your submission.</div>
+    </div>
+  </div>
+
+  <div class="verdict" style="margin-top:28px;">
+    <h2>🏆 Top Recommendation: Build Ideas #1 + #3 Together</h2>
+    <p>Submit <strong>ModGuard AI</strong> (New Tool category) for the $10K new tool prize, and <strong>TaskerBot→Devvit</strong> (Port category) for the $10K port prize. Two separate entries, two prize pools. Both are high-polish, broad-appeal, and directly solve the #1 and #2 mod pain points documented by Cornell research. If you have a team, split-build both simultaneously.</p>
+  </div>
+
+</div>
+</body>
+</html>

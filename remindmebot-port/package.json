@@ -1,0 +1,21 @@
+{
+  "name": "remindmebot-port",
+  "version": "0.1.0",
+  "description": "Devvit port of RemindMeBot - schedule comment-based reminders with PM delivery",
+  "type": "module",
+  "scripts": {
+    "build": "devvit build",
+    "test": "devvit test"
+  },
+  "dependencies": {
+    "@devvit/public-api": "latest"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  },
+  "devit": {
+    "name": "remindmebot-port",
+    "version": "0.1.0",
+    "description": "RemindMeBot ported to Devvit - native, stable, no downtime"
+  }
+}

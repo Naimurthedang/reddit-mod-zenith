@@ -1,0 +1,14 @@
+{
+  "name": "modflow",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "ModFlow - Intelligent modqueue prioritization dashboard for Reddit moderators",
+  "license": "MIT",
+  "dependencies": {
+    "@devvit/public-api": "^0.11.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  }
+}
